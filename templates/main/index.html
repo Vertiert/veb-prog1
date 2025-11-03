@@ -1,0 +1,167 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INK SOUL - Тату-салон</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+            const { useState } = React;
+
+            const Header = () => {
+                const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+                const handleNavClick = (e, section) => {
+                    e.preventDefault();
+                    setIsMenuOpen(false);
+                };
+
+                const toggleMenu = () => {
+                    setIsMenuOpen(!isMenuOpen);
+                };
+
+                return (
+                    <header className="header">
+                        <nav className="nav">
+                            <a href="/">
+                                <h3 className="logo">INK SOUL</h3>
+                            </a>
+
+                            <div className={`menu-toggle ${isMenuOpen ? 'active' : ''}`} onClick={toggleMenu}>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+
+                            <ul className={`nav-list ${isMenuOpen ? 'active' : ''}`}>
+                                <li>
+                                    <a href="/services" className="nav-link">
+                                        Услуги
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/about" className="nav-link">
+                                        О студии
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" className="nav-link" onClick={(e) => handleNavClick(e, 'Аккаунт')}>
+                                        Войти
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </header>
+                );
+            };
+
+            const Hero = () => {
+                const handleSignUp = () => {
+                    const name = prompt('Введите ваше имя для записи на сеанс:');
+                    if (name) {
+                        alert(`Спасибо, ${name}! Мы свяжемся с вами в ближайшее время.`);
+                    }
+                };
+
+                return (
+                    <section className="hero">
+                        <div className="content-wrapper">
+                            <div className="left-column">
+                                <div className="sign-up" onClick={handleSignUp}>
+                                    <span className="sign-up-link">Запланировать сеанс</span>
+                                </div>
+
+                                <article className="quote">
+                                    <p>Чернила, что рассказывают истории громче любых слов</p>
+                                </article>
+
+                                <div className="about">
+                                    <h2>Немного о студии</h2>
+                                    <p>
+                                        INK SOUL — это не просто тату-салон, это пространство, где искусство встречается с душой.
+                                        Наша студия объединяет лучших художников, для которых татуировка — это не работа,
+                                        а способ самовыражения. Каждая точка, каждая линия, каждый штрих — это внимание к деталям и
+                                        стремление к совершенству.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className="right-column">
+                                <img
+                                    src="{% static 'img/мужчина.jpg' %}"
+                                    alt="Мужчине бьют татуировку"
+                                    className="main-photo"
+                                    onError={(e) => {
+                                        e.target.style.display = 'none';
+                                        console.log('Изображение не найдено');
+                                    }}
+                                />
+                            </div>
+                        </div>
+                    </section>
+                );
+            };
+
+            const TattooArtist = () => {
+                return (
+                    <section className="tattoo-artist">
+                        <div className="artist-content">
+                            <div className="artist-text">
+                                <h2>Наш главный художник</h2>
+                                <p>
+                                    Мария — профессиональный тату-мастер с 8-летним опытом.
+                                    Специализируется на реализме, акварельной технике и орнаментах.
+                                    Каждая её работа — это уникальное произведение искусства,
+                                    которое остаётся с вами навсегда.
+                                </p>
+                                <p>
+                                    "Для меня татуировка — это не просто рисунок на коже,
+                                    это история, эмоция, часть души человека.
+                                    Я вкладываю в каждую работу всю свою любовь к искусству."
+                                </p>
+                            </div>
+                            <div className="artist-photo">
+                                <img
+                                    src="{% static 'img/татуировщица.jpg' %}"
+                                    alt="Тату-мастер Мария за работой"
+                                    className="artist-img"
+                                    onError={(e) => {
+                                        e.target.style.display = 'none';
+                                        const placeholder = document.createElement('div');
+                                        placeholder.className = 'image-placeholder';
+                                        placeholder.innerHTML = 'Фото тату-мастера';
+                                        e.target.parentNode.appendChild(placeholder);
+                                    }}
+                                />
+                            </div>
+                        </div>
+                    </section>
+                );
+            };
+
+            // app компонент
+            const App = () => {
+                return (
+                    <div className="app">
+                        <Header />
+                        <Hero />
+                        <TattooArtist />
+                    </div>
+                );
+            };
+
+            // Рендерим приложение
+            const root = ReactDOM.createRoot(document.getElementById('root'));
+            root.render(<App />);
+    </script>
+</body>
+</html>

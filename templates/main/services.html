@@ -1,0 +1,218 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Услуги - INK SOUL</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const Header = () => {
+            const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+            const handleNavClick = (e, section) => {
+                e.preventDefault();
+                setIsMenuOpen(false);
+                if (section === 'Главная') {
+                    window.location.href = '/';
+                } else if (section === 'О студии') {
+                    window.location.href = '/about';
+                } else {
+                    alert(`Переход к разделу: ${section}`);
+                }
+            };
+
+            const toggleMenu = () => {
+                setIsMenuOpen(!isMenuOpen);
+            };
+
+            return (
+                <header className="header">
+                    <nav className="nav">
+                        <a href="/">
+                            <h3 className="logo">INK SOUL</h3>
+                        </a>
+
+                        <div className={`menu-toggle ${isMenuOpen ? 'active' : ''}`} onClick={toggleMenu}>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+
+                        <ul className={`nav-list ${isMenuOpen ? 'active' : ''}`}>
+                            <li>
+                                <a href="/" className="nav-link" onClick={(e) => handleNavClick(e, 'Главная')}>
+                                    Главная
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/about" className="nav-link" onClick={(e) => handleNavClick(e, 'О студии')}>
+                                    О студии
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" className="nav-link" onClick={(e) => handleNavClick(e, 'Аккаунт')}>
+                                    Войти
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </header>
+            );
+        };
+
+        const ServicesHero = () => {
+            const handleSignUp = () => {
+                const name = prompt('Введите ваше имя для записи на сеанс:');
+                if (name) {
+                    alert(`Спасибо, ${name}! Мы свяжемся с вами в ближайшее время.`);
+                }
+            };
+
+            return (
+                <section className="hero">
+                    <div className="content-wrapper">
+                        <div className="left-column">
+                            <article className="quote">
+                                <p>Каждая татуировка — это история, которую мы помогаем рассказать</p>
+                            </article>
+
+                            <div className="sign-up" onClick={handleSignUp}>
+                                <span className="sign-up-link">Записаться на консультацию</span>
+                            </div>
+
+                            <div className="services-intro">
+                                <h2>Наши услуги</h2>
+                                <p>
+                                    Мы предлагаем полный спектр услуг в области тату-искусства.
+                                    От маленьких символов до масштабных работ — каждая татуировка
+                                    выполняется с максимальным вниманием к деталям и качеству.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="right-column">
+                            <img
+                                src="{% static 'img/тату-студия.jpg' %}"
+                                alt="Тату-студия"
+                                className="main-photo services-photo"
+                                onError={(e) => {
+                                    e.target.style.display = 'none';
+                                    const placeholder = document.createElement('div');
+                                    placeholder.className = 'image-placeholder';
+                                    placeholder.innerHTML = 'Тату-студия';
+                                    e.target.parentNode.appendChild(placeholder);
+                                }}
+                            />
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const ServicesList = () => {
+            return (
+                <section className="services-section">
+                    <div className="services-content">
+                        <h2>Виды татуировок</h2>
+                        <div className="services-grid">
+                            <div className="service-item">
+                                <div className="service-icon">🏴‍☠️</div>
+                                <h3>Традиционный (Old School)</h3>
+                                <p>Классические тату с жирными контурами, ограниченной палитрой и морской тематикой. Якоря, розы, ласточки</p>
+                                <div className="service-price">от 10 000 ₽</div>
+                            </div>
+                            <div className="service-item">
+                                <div className="service-icon">🎪</div>
+                                <h3>Новая школа (New School)</h3>
+                                <p>Яркие, мультяшные тату с объёмом и 3D-эффектом. Современная интерпретация традиционных мотивов</p>
+                                <div className="service-price">от 15 000 ₽</div>
+                            </div>
+                            <div className="service-item">
+                                <div className="service-icon">⚫</div>
+                                <h3>Черный стиль (Blackwork)</h3>
+                                <p>Монохромные тату с использованием только чёрного пигмента. Геометрия, мандалы, абстракция</p>
+                                <div className="service-price">от 12 000 ₽</div>
+                            </div>
+                            <div className="service-item">
+                                <div className="service-icon">🐉</div>
+                                <h3>Японский стиль (Ирэдзуми)</h3>
+                                <p>Традиционные японские мотивы: драконы, карпы, самураи. Символичные и масштабные работы</p>
+                                <div className="service-price">от 20 000 ₽</div>
+                            </div>
+                            <div className="service-item">
+                                <div className="service-icon">🌿</div>
+                                <h3>Трайбл (этнический стиль)</h3>
+                                <p>Этнические орнаменты, кельтские узлы, полинезийские мотивы. Символика и традиции</p>
+                                <div className="service-price">от 11 000 ₽</div>
+                            </div>
+                            <div className="service-item">
+                                <div className="service-icon">🔘</div>
+                                <h3>Точки: дотворк (DotWork)</h3>
+                                <p>Техника создания изображений с помощью точек различной плотности и размера. Медитативный процесс</p>
+                                <div className="service-price">от 13 000 ₽</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const AdditionalServices = () => {
+            return (
+                <section className="additional-services">
+                    <div className="services-content">
+                        <h2>Дополнительные услуги</h2>
+                        <div className="additional-grid">
+                            <div className="additional-item">
+                                <h3>Консультация</h3>
+                                <p>Бесплатная консультация по выбору стиля, размера и расположения татуировки</p>
+                                <div className="service-price">Бесплатно</div>
+                            </div>
+                            <div className="additional-item">
+                                <h3>Эскиз</h3>
+                                <p>Разработка индивидуального эскиза по вашим пожеланиям</p>
+                                <div className="service-price">от 2 000 ₽</div>
+                            </div>
+                            <div className="additional-item">
+                                <h3>Коррекция</h3>
+                                <p>Исправление и доработка существующей татуировки через 1 месяц после нанесения</p>
+                                <div className="service-price">от 3 000 ₽</div>
+                            </div>
+                            <div className="additional-item">
+                                <h3>Уход</h3>
+                                <p>Комплект средств для правильного ухода за свежей татуировкой</p>
+                                <div className="service-price">1 500 ₽</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const App = () => {
+            return (
+                <div className="app">
+                    <Header />
+                    <ServicesHero />
+                    <ServicesList />
+                    <AdditionalServices />
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

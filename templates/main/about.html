@@ -1,0 +1,197 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О студии - INK SOUL</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const Header = () => {
+            const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+            const handleNavClick = (e, section) => {
+                e.preventDefault();
+                setIsMenuOpen(false);
+                if (section === 'Главная') {
+                    window.location.href = '/';
+                } else {
+                    alert(`Переход к разделу: ${section}`);
+                }
+            };
+
+            const toggleMenu = () => {
+                setIsMenuOpen(!isMenuOpen);
+            };
+
+            return (
+                <header className="header">
+                    <nav className="nav">
+                        <a href="/">
+                            <h3 className="logo">INK SOUL</h3>
+                        </a>
+
+                        <div className={`menu-toggle ${isMenuOpen ? 'active' : ''}`} onClick={toggleMenu}>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+
+                        <ul className={`nav-list ${isMenuOpen ? 'active' : ''}`}>
+                            <li>
+                                <a href="/" className="nav-link" onClick={(e) => handleNavClick(e, 'Главная')}>
+                                    Главная
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/services" className="nav-link">
+                                    Услуги
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" className="nav-link" onClick={(e) => handleNavClick(e, 'Аккаунт')}>
+                                    Войти
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </header>
+            );
+        };
+
+        const StudioInfo = () => {
+            return (
+                <section className="hero">
+                    <div className="content-wrapper">
+                        <div className="left-column">
+                            <article className="quote">
+                                <p>Искусство, которое остаётся с тобой навсегда</p>
+                            </article>
+
+                            <div className="work-process">
+                                <h2>Как мы работаем</h2>
+                                <div className="process-steps-main">
+                                    <div className="process-step">
+                                        <div className="step-header">
+                                            <span className="step-number">1</span>
+                                            <h3>Консультация</h3>
+                                        </div>
+                                        <p>Обсуждаем вашу идею, желаемый стиль, размер и расположение татуировки. Отвечаем на все вопросы</p>
+                                    </div>
+                                    <div className="process-step">
+                                        <div className="step-header">
+                                            <span className="step-number">2</span>
+                                            <h3>Эскиз</h3>
+                                        </div>
+                                        <p>Создаём индивидуальный эскиз на основе ваших пожеланий. Вносим правки до полного соответствия</p>
+                                    </div>
+                                    <div className="process-step">
+                                        <div className="step-header">
+                                            <span className="step-number">3</span>
+                                            <h3>Подготовка</h3>
+                                        </div>
+                                        <p>Подбираем оптимальное расположение, делаем разметку, готовим рабочее место и материалы</p>
+                                    </div>
+                                    <div className="process-step">
+                                        <div className="step-header">
+                                            <span className="step-number">4</span>
+                                            <h3>Нанесение</h3>
+                                        </div>
+                                        <p>Процесс нанесения татуировки с использованием профессионального оборудования и качественных материалов</p>
+                                    </div>
+                                    <div className="process-step">
+                                        <div className="step-header">
+                                            <span className="step-number">5</span>
+                                            <h3>Уход</h3>
+                                        </div>
+                                        <p>Подробная консультация по уходу за свежей татуировкой. Мы всегда на связи для консультаций</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="right-column">
+                            <img
+                                src="{% static 'img/тату-машинка.jpg' %}"
+                                alt="Инструменты для татуировки"
+                                className="main-photo"
+                                onError={(e) => {
+                                    e.target.style.display = 'none';
+                                    const placeholder = document.createElement('div');
+                                    placeholder.className = 'image-placeholder';
+                                    placeholder.innerHTML = 'Инструменты для татуировки';
+                                    e.target.parentNode.appendChild(placeholder);
+                                }}
+                            />
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const Contacts = () => {
+            return (
+                <section className="contacts-section">
+                    <div className="contacts-content">
+                        <h2>Контакты</h2>
+                        <div className="contacts-grid">
+                            <div className="contact-info">
+                                <h3>📍 Адрес</h3>
+                                <p>Москва, ул. Татуировочная, 15</p>
+                                <p>Метро: Чистые пруды</p>
+                            </div>
+                            <div className="contact-info">
+                                <h3>📞 Телефон</h3>
+                                <p>+7 (999) 123-45-67</p>
+                                <p>+7 (495) 765-43-21</p>
+                            </div>
+                            <div className="contact-info">
+                                <h3>✉️ Электронная почта</h3>
+                                <p>info@inksoul.ru</p>
+                                <p>booking@inksoul.ru</p>
+                            </div>
+                            <div className="contact-info">
+                                <h3>🕒 Часы работы</h3>
+                                <p>Пн-Пт: 10:00 - 22:00</p>
+                                <p>Сб-Вс: 11:00 - 20:00</p>
+                            </div>
+                        </div>
+                        <div className="social-links">
+                            <h3>Мы в соцсетях</h3>
+                            <div className="social-icons">
+                                <span>📷 Instagram</span>
+                                <span>📘 VK</span>
+                                <span>📹 TikTok</span>
+                                <span>💬 Telegram</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const App = () => {
+            return (
+                <div className="app">
+                    <Header />
+                    <StudioInfo />
+                    <Contacts />
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
